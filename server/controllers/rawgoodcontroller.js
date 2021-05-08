@@ -5,15 +5,16 @@ const bcrypt = require('bcryptjs');
 const validateSession = require('../middleware/validate-session')
 // const rawGood = require('../models/rawGood');
 
-router.post('/rawGood', function (req, res) {
+router.post('/rawGood', validateSession,  function (req, res) {
+    let userid = req.user.id
     rawGood.create({
         rgName: req.body.rawGood.rgName,
         rgUOM: req.body.rawGood.rgUOM,
         rgQty: req.body.rawGood.rgQty,
         rgCost: req.body.rawGood.rgCost,
         rgVendor: req.body.rawGood.rgVendor,
-        rgTime: req.body.rawGood.rgTime,
-        owner: req.user.id
+        userId: userid
+
     })
         .then(
             function createSuccess(rawGood) {
@@ -30,7 +31,7 @@ router.post('/rawGood', function (req, res) {
 
 //Get Raw goods by user
 
- router.get("/mine", validateSession, (req, res) => {
+ router.get("/rawgoodlist", validateSession, (req, res) => {
     let userid = req.user.id
     RawGood.findAll({
         where: { owner: userid }
@@ -39,7 +40,7 @@ router.post('/rawGood', function (req, res) {
         .catch(err => res.status(500).json({ error: err }))
 });
 
-router.put('/edit/:entryId', 
+router.put('/rawgoodedit/:entryId', 
 // validateSession,
 function (req, res){
     const editrawGood= {
@@ -48,7 +49,7 @@ function (req, res){
         rgQty: req.body.rawGood.rgQty,
         rgCost: req.body.rawGood.rgCost,
         rgVendor: req.body.rawGood.rgVendor,
-        rgTime: req.body.rawGood.rgTime,
+     
     };
     const query = { where: { id: req.params.entryId, owner: req.user.id}}
     RawGood.update(editrawGood, query)
@@ -56,7 +57,7 @@ function (req, res){
     .catch((err) => res.status(500).json({ error:err}))
 });
 
-router.delete('/delete/:id', validateSession, function(req, res){
+router.delete('/rawgooddelete/:id', validateSession, function(req, res){
     const query = {where: { id: req.params.id, owner: requestAnimationFrame.id}};
 
     RawGood.destroy(query)

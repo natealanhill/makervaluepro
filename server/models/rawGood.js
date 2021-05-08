@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) => {
             unique: false
         },
         rgQty: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DECIMAL,
             allowNull: true,
             unique: false
         },
         rgCost: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DECIMAL,
             allowNull:true,
             unique: false
         },
@@ -25,11 +25,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
             unique: false
         },
-        rgTime:{
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            unique: false
-        },
+
     })
 return RawGood;
 }

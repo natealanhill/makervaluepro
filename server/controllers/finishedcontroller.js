@@ -19,7 +19,7 @@ router.post('/finishedGood', function (req, res) {
                 res.json({
                     finishedGood: finishedGood,
                     message: "New finished product entry successful",
-                    // sessionToken: token
+                    sessionToken: token
                 });
             }
 
@@ -27,7 +27,7 @@ router.post('/finishedGood', function (req, res) {
         .catch(err => res.status(500).json({ error: err }))
 });
 
-router.get("/mine", validateSession, (req, res) => {
+router.get("/finishedlist", validateSession, (req, res) => {
     let userid = req.user.id
     FinishedGood.findAll({
         where: { owner: userid }
@@ -36,7 +36,7 @@ router.get("/mine", validateSession, (req, res) => {
         .catch(err => res.status(500).json({ error: err }))
 });
 
-router.put('/edit/:entryId', validateSession, function (req, res){
+router.put('/finishededit/:entryId', validateSession, function (req, res){
     const editfinishedGood= {
         fgName: req.body.finishedGood.fgName,
         fgSRP: req.body.finishedGood.fgSRP,
@@ -49,8 +49,8 @@ router.put('/edit/:entryId', validateSession, function (req, res){
     .catch((err) => res.status(500).json({ error:err}))
 })
 
-router.delete('/delete/:id', validateSession, function(req, res){
-    const query = {where: { id: req.params.id, owner: requestAnimationFrame.id}};
+router.delete('/finisheddelete/:id', validateSession, function(req, res){
+    const query = {where: { id: req.params.id, owner: req.user.id}};
 
     FinishedGood.destroy(query)
     .then(() => res.status(200).json({ message: "Entry Removed FG" }))

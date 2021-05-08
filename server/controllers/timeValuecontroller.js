@@ -22,7 +22,7 @@ router.post('/timeValue', function (req, res){
     .catch(err => res.status(500).json({ error: err }))
 });
 
-router.put('/edit/:entryId', validateSession, function (req, res) {
+router.put('/timevalueedit/:entryId', validateSession, function (req, res) {
     const edittimeValue = {
         timeValue: req.body.timeValue.timeValue,
     }
