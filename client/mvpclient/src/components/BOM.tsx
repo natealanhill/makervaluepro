@@ -1,190 +1,153 @@
 import React, { Component } from 'react';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Button } from '@material-ui/core';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 type AcceptedProps = {
-    // sessionToken: (newToken: string) => void;
-    // Need to know that this is the correct way to bring the token into this class component
+    sessionToken: string,
 }
 
-interface RawGoodState {
-    rgName: string,
-    rgUOM: string,
-    rgQty: number,
-    rgCost: number,
-    rgVendor: string,
+interface BOMState {
+    BOMname: string,
+    BOMrawGood: [],
+    BOMtime: number,
+    rgUnits: number
 
 }
-// class MyForm extends React.Component {
-//     constructor(props: any) {
-//       super(props);
-//       this.state = { username: 'test' };
-//     }
-//     myChangeHandler = (event: any) => {
-//       this.setState({username: event.target.value});
-//     }
-//     render() {
-//       return (
-//         <form>
-//         <h1>Hello </h1>
-//         <p>Enter your name:</p>
-//         <input
-//           type='text'
-//           onChange={this.myChangeHandler}
-//         />
-//         </form>
-//       );
-//     }
-//   };
 
-export default class RawGood extends Component<AcceptedProps, RawGoodState> {
-    constructor(props: AcceptedProps) {
-        super(props);
-        this.state = {
-            rgName: "",
-            rgUOM: "",
-            rgQty: 0,
-            rgCost: 0,
-            rgVendor: "",
-        }
+
+export default class BOM extends Component<AcceptedProps, BOMState> {
+constructor(props: AcceptedProps) {
+    super(props);
+    this.state = {
+        BOMname: "",
+        BOMrawGood: [],
+        BOMtime: 0,
+        rgUnits: 0.0
     }
-    handleSubmit = (e: any) => {
-        e.preventDefault()
-        fetch('http://localhost:3000/rawGood/rawGood', {
-            method: 'POST',
-            body: JSON.stringify({
-                rawGood: {
-                    rgName: this.state.rgName,
-                    rgUOM: this.state.rgUOM,
-                    rgQty: this.state.rgQty,
-                    rgCost: this.state.rgCost,
-                    rgVendor: this.state.rgVendor
-                },
-            }),
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-
-        }).then(
-            (response) => response.json()
-        ).then((data) => {
-            // this.props.sessionToken(data.sessionToken);
+}
+handleSubmit = (e: any) => {
+    e.preventDefault()
+    fetch('http://localhost:3000/BOM/BOM', {
+        method: 'POST',
+        body: JSON.stringify({
+            BOM: {
+                BOMname: this.state.BOMname,
+                BOMrawGood: this.state.BOMrawGood,
+                BOMtime: this.state.BOMtime,
+                rgUnits: this.state.rgUnits
+            },
+        }),
+        headers: new Headers({
+            'Content-Type': 'application/json'
         })
-    };
 
-    handlergNameChange = (event: any) => {
-        const rgName = event.target.value;
-        this.setState({ rgName: rgName })
-    };
-    handlergUOMChange = (event: any) => {
-        const rgUOM = event.target.value;
-        this.setState({ rgUOM: rgUOM })
-    };
-    handlergQtyChange = (event: any) => {
-        const rgQty = event.target.value;
-        this.setState({ rgQty: rgQty })
-    };
-    handlergCostChange = (event: any) => {
-        const rgCost = event.target.value;
-        this.setState({ rgCost: rgCost })
-    };
-    handlergVendorChange = (event: any) => {
-        const rgVendor = event.target.value;
-        this.setState({ rgVendor: rgVendor })
-    };
+    }).then(
+        (response) => response.json()
+    ).then((data) => {
+        // this.props.sessionToken(data.sessionToken);
+    })
+};
+
+handleBOMnameChange = (event: any) => {
+    const BOMname = event.target.value;
+    this.setState({ BOMname: BOMname })
+};
+handleBOMrawGoodChange = (event: any) => {
+    const BOMrawGood = event.target.value;
+    this.setState({ BOMrawGood: BOMrawGood })
+};
+handlergUnitsChange = (event: any) => {
+    const rgUnits = event.target.value;
+    this.setState({ rgUnits: rgUnits })
+};
 
 
-    //Render from Register.tsx needs to be updated for raw goods
-    render() {
-        return (
-            <div>
-                <h2>Raw Material Tracking</h2>
+render() {
+    return (
+        <div>
+            <h2>Bill of Materials Entry</h2>
 
-                <ValidatorForm
-                    style={{
-                        marginLeft: 'auto',
-                        marginRight: 'auto',
-                        width: '30%',
-                        display: 'block',
-                        backgroundColor: '#FFFFFF',
-                    }}
-                    ref='form'
-                    onSubmit={this.handleSubmit}
-                    onError={(errors) => console.log(errors)}
+            <ValidatorForm
+                style={{
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    width: '30%',
+                    display: 'block',
+                    backgroundColor: '#FFFFFF',
+                }}
+                ref='form'
+                onSubmit={this.handleSubmit}
+                onError={(errors) => console.log(errors)}
+            >
+                <TextValidator
+                    label='Raw Material Name'
+
+
+                    onChange={(e) => this.handleBOMnameChange(e)}
+                    name='Finished Product Name'
+                    value={this.state.BOMname}
+                    validators={['required']}
+                    errorMessages={[
+                        'Required, names should be unique but easily remembered',
+
+                    ]}
+                    autoComplete='off'
                 >
-                    <TextValidator
-                        label='Raw Material Name'
-                        
-                        onChange={(e) => this.handlergNameChange(e)}
-                        name='rgName'
-                        value={this.state.rgName}
-                        validators={['required']}
-                        errorMessages={[
-                            'Required, names should be unique but easily remembered',
+                </TextValidator>
 
-                        ]}
-                        autoComplete='off'
-                    >
-                    </TextValidator>
-                    <TextValidator
-                        label='Unit of Measure'
-                        onChange={this.handlergUOMChange}
-                        name='Unit of Measure'
-                        value={this.state.rgUOM}
-                        type='string'
-                        validators={[]}
-                        errorMessages={[]}>
-                    </TextValidator>
-                    <TextValidator
-                        label='Quantity'
-                        onChange={this.handlergQtyChange}
-                        name='Quantity'
-                        value={this.state.rgQty}
-                        type='number'
-                        validators={['required']}
-                        errorMessages={[
-                            'username not available',
-                            'this field is required'
-                        ]}
-                    // autoComplete='off'
-                    >
-                    </TextValidator>
-                    <TextValidator
-                        label='Cost per Unit'
-                        onChange={this.handlergCostChange}
-                        name='Cost'
-                        value={this.state.rgCost}
-                        type='number'
-                        validators={['required']}
-                        errorMessages={[
-                            // 'password should be more than 5 letters',
-                            'this field is required',
-                        ]}>
-                    </TextValidator>
-                    <TextValidator
-                        label='Vendor'
-                        onChange={this.handlergVendorChange}
-                        name='Cost'
-                        value={this.state.rgVendor}
-                        type='string'
-                        validators={['required']}
-                        errorMessages={[
-                            // 'password should be more than 5 letters',
-                            'this field is required',
-                        ]}>
-                    </TextValidator>
-                    <br />
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        type="submit"
-                    >Submit
+
+
+                <TextValidator
+                    label='Raw Good List'
+                    onChange={this.handleBOMrawGoodChange}
+                    name='Unit of Measure'
+                    value={this.state.BOMrawGood}
+                    type='string'
+                    validators={[]}
+                    errorMessages={[]}>
+                </TextValidator>
+
+
+                <TextValidator
+                    label='Amount to be used'
+                    onChange={this.handlergUnitsChange}
+                    name='rgUnits'
+                    value={this.state.rgUnits}
+                    type='number'
+                    validators={['number', 'required']}
+                    errorMessages={[
+                        'username not available',
+                        'this field is required'
+                    ]}
+                // autoComplete='off'
+                >
+                </TextValidator>
+
+                <br />
+                <Button
+                    color="primary"
+                    variant="contained"
+                    type="submit"
+                >Submit
                 </Button>
-                </ValidatorForm>
-                {console.log(this.state.rgName)}
-            </div>
+            </ValidatorForm>
+            {console.log(this.state.BOMname)}
+        </div>
 
-        );
+    );
 
-    }
+}
 }

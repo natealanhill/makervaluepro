@@ -12,9 +12,9 @@ router.post('/BOM', validateSession, function (req, res) {
         BOM.create({
             BOMname: req.body.BOMname,
             BOMrawGoods: rawGoodList,
-
             rgUnits: req.body.rgUnits,
-            userId: req.user.id
+            BOMtime: req.body.BOMtime,
+            userId: userid
         })
             .then(
                 function createSuccess(response) {
@@ -39,20 +39,18 @@ router.get("/BOMlist", validateSession, (req, res) => {
         .catch(err => res.status(500).json({ error: err }))
 });
 
-router.put('/BOMedit/:entryId',
-    // validateSession,
-    function (req, res) {
-        const editBOM = {
-            BOMname: req.body.BOM.BOMname,
-            BOMrawGoods: [],  //is this a fetch?
-            rgUnits: req.body.BOM.rgUnits,
+router.put('/BOMedit/:entryId', validateSession, function (req, res) {
+    const editBOM = {
+        BOMname: req.body.BOM.BOMname,
+        BOMrawGoods: [],  //is this a fetch?
+        rgUnits: req.body.BOM.rgUnits,
 
-        };
-        const query = { where: { id: req.params.entryId, owner: req.user.id } }
-        BOM.update(editBOM, query)
-            .then((rawGood) => res.status(200).json(rawgood))
-            .catch((err) => res.status(500).json({ error: err }))
-    });
+    };
+    const query = { where: { id: req.params.entryId, owner: req.user.id } }
+    BOM.update(editBOM, query)
+        .then((rawGood) => res.status(200).json(rawgood))
+        .catch((err) => res.status(500).json({ error: err }))
+});
 
 router.delete('/BOMdelete/:id', validateSession, function (req, res) {
     const query = { where: { id: req.params.id, owner: requestAnimationFrame.id } };

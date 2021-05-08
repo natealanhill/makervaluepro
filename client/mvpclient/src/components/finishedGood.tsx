@@ -3,54 +3,31 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Button } from '@material-ui/core';
 
 type AcceptedProps = {
-    // sessionToken: (newToken: string) => void;
-    // Need to know that this is the correct way to bring the token into this class component
+    sessionToken: string,
 }
 
-interface RawGoodState {
-    rgName: string,
-    rgUOM: string,
-    rgQty: number,
-    rgCost: number,
-    rgVendor: string,
+interface FinishedState {
+    fgName: string,
+    fgSRP: number,
+    fgCOGS: number,
+    fgMakerPrice: number
     
 }
-// class MyForm extends React.Component {
-//     constructor(props: any) {
-//       super(props);
-//       this.state = { username: 'test' };
-//     }
-//     myChangeHandler = (event: any) => {
-//       this.setState({username: event.target.value});
-//     }
-//     render() {
-//       return (
-//         <form>
-//         <h1>Hello </h1>
-//         <p>Enter your name:</p>
-//         <input
-//           type='text'
-//           onChange={this.myChangeHandler}
-//         />
-//         </form>
-//       );
-//     }
-//   };
 
-export default class RawGood extends Component<AcceptedProps, RawGoodState> {
+
+export default class FinishedGood extends Component<AcceptedProps, FinishedState> {
     constructor(props: AcceptedProps) {
         super(props);
         this.state = {
-            rgName: "",
-            rgUOM: "",
-            rgQty: 0,
-            rgCost: 0,
-            rgVendor: "",
+            fgName: "",
+            fgSRP: 0.0,
+            fgCOGS: 0.0,
+            fgMakerPrice: 0.0
         }
     }
 handleSubmit = (e:any) => {
     e.preventDefault()
-    fetch('http://localhost:3000/rawGood/rawGood', {
+    fetch('http://localhost:3000/finshedGood/finishedGood', {
         method: 'POST',
         body: JSON.stringify({
             rawGood:{
@@ -98,7 +75,7 @@ handlergVendorChange = (event: any) => {
 render() {
     return (
         <div>
-            <h2>Raw Material Tracking</h2>
+            <h2>Create a New Finished Good without a BOM</h2>
            
             <ValidatorForm
                 style={{

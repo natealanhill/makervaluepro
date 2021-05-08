@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: false
         },
+        BOMtime:{
+            type:DataTypes.Number,
+            allownull: false,
+            unique: false
+        },
         rgUnits:{
             type: DataTypes.DECIMAL,
             allowNull: false,

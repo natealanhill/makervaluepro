@@ -5,13 +5,14 @@ import './App.css'
 import Auth from './components/auth/Auth'
 import RawGood from './components/rawgood'
 import RawGoodList from './components/rawGoodList'
-
+import BOM from './components/BOM'
+import FinishedGood from './components/finishedGood'
 interface Props {
 
 }
 
 interface State {
-  sessionToken: string | null,
+  sessionToken: string,
 
 }
 
@@ -40,8 +41,10 @@ class App extends React.Component<Props, State> {
       <div>
         
         <Auth updateToken={this.updateToken} />
-        <RawGood />
-        <RawGoodList />
+        <RawGood sessionToken={this.state.sessionToken}/>
+        <RawGoodList sessionToken={this.state.sessionToken}/>
+        <BOM sessionToken={this.state.sessionToken}/>
+        <FinishedGood sessionToken={this.state.sessionToken}/>
       </div>
     )
   }

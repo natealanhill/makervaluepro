@@ -40,9 +40,7 @@ router.post('/rawGood', validateSession,  function (req, res) {
         .catch(err => res.status(500).json({ error: err }))
 });
 
-router.put('/rawgoodedit/:entryId', 
-// validateSession,
-function (req, res){
+router.put('/rawgoodedit/:entryId', validateSession, function (req, res){
     const editrawGood= {
         rgName: req.body.rawGood.rgName,
         rgUOM: req.body.rawGood.rgUOM,

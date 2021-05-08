@@ -3,7 +3,7 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Button } from '@material-ui/core';
 
 type AcceptedProps = {
-    // sessionToken: (newToken: string) => void;
+    sessionToken: string,
     // Need to know that this is the correct way to bring the token into this class component
 }
 
