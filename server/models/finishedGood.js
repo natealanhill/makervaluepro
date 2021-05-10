@@ -6,12 +6,12 @@ module.exports = (sequelize, DataTypes) => {
             unique: false
         },
         fgSRP: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DECIMAL,
             allowNull: true,
             unique: false
         },
         fgCOGS: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DECIMAL,
             allowNull: true,
             unique: false
         },

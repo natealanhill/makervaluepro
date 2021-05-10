@@ -7,12 +7,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         BOMrawGoods:{
             type: DataTypes.JSON,
-            //type: DataTypes.JSON(DataTypes.STRING),
             allowNull: false,
             unique: false
         },
         BOMtime:{
-            type:DataTypes.Number,
+            type:DataTypes.INTEGER,
             allownull: false,
             unique: false
         },

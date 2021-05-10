@@ -1,17 +1,31 @@
 import React, { Component } from 'react';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Button } from '@material-ui/core';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import BOM from './BOM';
 
 type AcceptedProps = {
     sessionToken: string,
 }
 
 interface FinishedState {
-    fgName: string,
+    fgName: [],
     fgSRP: number,
     fgCOGS: number,
-    fgMakerPrice: number
-    
+    fgMakerPrice: number,  
+    selectedId: number | null
 }
 
 
@@ -19,23 +33,51 @@ export default class FinishedGood extends Component<AcceptedProps, FinishedState
     constructor(props: AcceptedProps) {
         super(props);
         this.state = {
-            fgName: "",
+            fgName: [],
             fgSRP: 0.0,
             fgCOGS: 0.0,
-            fgMakerPrice: 0.0
+            fgMakerPrice: 0.0,
+            selectedId: null
         }
     }
+    componentDidMount(){
+        this.getAllBOM()
+    };
+    componentDidUpdate(prev:AcceptedProps){
+        if (prev.sessionToken !== this.props.sessionToken){
+            this.getAllBOM()
+        }
+    }
+
+getAllBOM = () => {
+    if (this.props.sessionToken) {
+        fetch("Http://localhost:3000/BOM/BOMlist", {
+            method: "GET",
+            headers: new Headers({
+                "Content-Type": "application/json",
+                Authorization: this.props.sessionToken,
+            }),
+        })
+        .then((res) => res.json())
+                .then((data) => {
+                    this.setState({ fgName: data })
+                })
+                .catch((err) => console.log(err));
+                console.log(this.state.fgName)
+    }
+}
+
+  
 handleSubmit = (e:any) => {
     e.preventDefault()
     fetch('http://localhost:3000/finshedGood/finishedGood', {
         method: 'POST',
         body: JSON.stringify({
-            rawGood:{
-                rgName: this.state.rgName,
-                rgUOM: this.state.rgUOM,
-                rgQty: this.state.rgQty,
-                rgCost: this.state.rgCost,
-                rgVendor: this.state.rgVendor
+            fGood:{
+                fgName: this.state.fgName,
+                fgSRP: this.state.fgSRP,
+                fgCOGS: this.state.fgCOGS,
+                fgMakerPrice: this.state.fgMakerPrice, 
             },
         }),
         headers: new Headers({
@@ -49,33 +91,27 @@ handleSubmit = (e:any) => {
     })
 };
 
-handlergNameChange = (event: any) => {
-    const rgName = event.target.value;
-    this.setState({ rgName: rgName })
+handlerfgNameChange = (event: any) => {
+    const fgName = event.target.value;
+    this.setState({ fgName: fgName })
 };
-handlergUOMChange = (event: any) => {
-    const rgUOM = event.target.value;
-    this.setState({ rgUOM: rgUOM})
+handlefgCSRPChange = (event: any) => {
+    const fgSRP = event.target.value;
+    this.setState({ fgSRP: fgSRP})
 };
-handlergQtyChange = (event: any) => {
-    const rgQty = event.target.value;
-    this.setState({ rgQty: rgQty})
+handlefgCOGSChange = (event: any) => {
+    const fgCOGS = event.target.value;
+    this.setState({ fgCOGS: fgCOGS})
 };
-handlergCostChange = (event: any) => {
-    const rgCost = event.target.value;
-    this.setState({ rgCost: rgCost})
-};
-handlergVendorChange = (event: any) => {
-    const rgVendor = event.target.value;
-    this.setState({ rgVendor: rgVendor})
+handlefgMakerPriceChange = (event: any) => {
+    const fgMakerPrice = event.target.value;
+    this.setState({ fgMakerPrice: fgMakerPrice})
 };
 
-
-//Render from Register.tsx needs to be updated for raw goods
 render() {
     return (
         <div>
-            <h2>Create a New Finished Good without a BOM</h2>
+            <h2>Finished Good</h2>
            
             <ValidatorForm
                 style={{
@@ -89,6 +125,24 @@ render() {
                 onSubmit={this.handleSubmit}
                 onError={(errors) => console.log(errors)}
             >
+                
+                <FormControl >
+                        <InputLabel id="demo-simple-select-label">Raw Good</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={this.state.selectedId}
+                            onChange={this.handleBOMrawGoodChange}>
+                            {this.state.BOMrawGood.map((rawg: any) => (
+                                <MenuItem value={rawg.id}>
+                                    {rawg.rgName}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                
+                
+                
                 <TextValidator
                     label='Raw Material Name'
                     hover= 'TExt EX'

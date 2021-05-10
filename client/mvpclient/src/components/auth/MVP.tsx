@@ -1,14 +1,11 @@
 import React, { useState } from 'react'
 import { Button } from '@material-ui/core';
 import logo from './logo.svg'
-import './App.css'
-import Auth from './components/auth/Auth'
-import RawGood from './components/rawgood'
+import Auth from './Auth'
+import RawGood from '../rawgood'
 // import RawGoodList from './components/rawGoodList.txt'
-import BOM from './components/BOM'
+import BOM from '../BOM'
 // import FinishedGood from './components/finishedGood.txt'
-
-
 interface Props {
 
 }
@@ -23,7 +20,7 @@ class App extends React.Component<Props, State> {
     super(props)
     this.state = { sessionToken: "" }
   }
-
+  //validate session token
 
   updateToken = (newToken: any) => {
     localStorage.setItem('sessionToken', newToken)
@@ -47,7 +44,6 @@ class App extends React.Component<Props, State> {
 
     return (
       <div>
-        <Auth updateToken={this.updateToken} />
         <RawGood sessionToken={this.state.sessionToken}/>
         {/* <RawGoodList sessionToken={this.state.sessionToken}/> */}
         <BOM sessionToken={this.state.sessionToken}/>

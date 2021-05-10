@@ -28,8 +28,9 @@ export default class Register extends Component<AcceptedProps, RegisterState> {
     }
 
     handleSubmit = (e: any) => {
+        if (this.state.username !== "" && this.state.password !== "") {
         e.preventDefault()
-        fetch(`http://localhost:3000/user/register`, {
+        fetch(`http://localhost:3000/register`, {
             method: 'POST',
             body: JSON.stringify({
                 user: {
@@ -49,6 +50,7 @@ export default class Register extends Component<AcceptedProps, RegisterState> {
             this.props.updateToken(data.sessionToken);
 
         })
+    }
 
     };
     handlefnameChange = (event: any) => {

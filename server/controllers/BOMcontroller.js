@@ -14,7 +14,7 @@ router.post('/BOM', validateSession, function (req, res) {
             BOMrawGoods: rawGoodList,
             rgUnits: req.body.rgUnits,
             BOMtime: req.body.BOMtime,
-            userId: userid
+            userId: req.user.id
         })
             .then(
                 function createSuccess(response) {
@@ -31,9 +31,8 @@ router.post('/BOM', validateSession, function (req, res) {
 
 
 router.get("/BOMlist", validateSession, (req, res) => {
-    let userid = req.user.id
     BOM.findAll({
-        where: { owner: userid }
+        where: { userId: req.user.id }
     })
         .then(BOM => res.status(200).json(BOM))
         .catch(err => res.status(500).json({ error: err }))

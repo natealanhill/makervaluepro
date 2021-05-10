@@ -13,7 +13,8 @@ router.post('/rawGood', validateSession,  function (req, res) {
         rgQty: req.body.rawGood.rgQty,
         rgCost: req.body.rawGood.rgCost,
         rgVendor: req.body.rawGood.rgVendor,
-        userId: userid
+        userId: userid,
+        bomid: req.body.rawGood.bomid
 
     })
         .then(
@@ -31,10 +32,21 @@ router.post('/rawGood', validateSession,  function (req, res) {
 
 //Get Raw goods by user
 
- router.get("/rawgoodlist", validateSession, (req, res) => {
-    let userid = req.user.id
+ router.get("/all", validateSession, (req, res) => {
+    // console.log("Got it");
+    // let userid = req.user.id
     RawGood.findAll({
-        where: { owner: userid }
+        // where: { owner: userid }
+    })
+        .then(rawGood => res.status(200).json(rawGood))
+        .catch(err => res.status(500).json({ error: err }))
+});
+
+router.get("/mine", validateSession, (req, res) => {
+    // console.log("Got it");
+    // let userid = req.user.id
+    RawGood.findAll({
+        where: { userId: req.user.id }
     })
         .then(rawGood => res.status(200).json(rawGood))
         .catch(err => res.status(500).json({ error: err }))
