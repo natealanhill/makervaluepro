@@ -63,13 +63,14 @@ export default class Login extends Component<AcceptedProps, LoginState> {
   render() {
     return (
       <div>
-        <h2>Login Welcome to Maker Value Pro</h2>
+    
 
         <ValidatorForm
           style={{
-            marginLeft: 'auto',
+            color: "white",
+            marginLeft: '100px',
             marginRight: 'auto',
-            width: '30%',
+            width: '60%',
             display: 'block',
             backgroundColor: '#FFFFFF',
           }}
@@ -78,6 +79,13 @@ export default class Login extends Component<AcceptedProps, LoginState> {
           onError={(errors) => console.log(errors)}
         >
           <TextValidator
+                    // style={{
+                    //   marginLeft: '100px',
+                    //   marginRight: 'auto',
+                    //   width: '60%',
+                    //   display: 'block',
+                    //   backgroundColor: '#FFFFFF',
+                    // }}
             label='Username'
             onChange={(e) => this.handleUserChange(e)}
             name='username'
@@ -102,7 +110,15 @@ export default class Login extends Component<AcceptedProps, LoginState> {
             ]}>
           </TextValidator>
           <br />
-          <Button variant='contained' onClick={this.handleSubmit}>
+          <Button variant='contained' onClick={this.handleSubmit}
+          style={{
+            color: 'white',
+            marginLeft: '20px',
+            marginRight: 'auto',
+            width: '20%',
+            display: 'block',
+            backgroundColor: 'gray',
+          }}>
             Login
           </Button>
         </ValidatorForm>

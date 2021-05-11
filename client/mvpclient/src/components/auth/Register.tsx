@@ -76,13 +76,13 @@ export default class Register extends Component<AcceptedProps, RegisterState> {
     render() {
         return (
             <div>
-                <h2>Hello new user!</h2>
-                <h2>Let's get started</h2>
+                <h1>Hello new user!</h1>
+                <h3>Let's get started</h3>
 
 
                 <ValidatorForm
                     style={{
-                        marginLeft: 'auto',
+                        marginLeft: '100px',
                         marginRight: 'auto',
                         width: '30%',
                         display: 'block',
@@ -142,10 +142,18 @@ export default class Register extends Component<AcceptedProps, RegisterState> {
                     </TextValidator>
                     <br />
                     <Button
-                        color="primary"
+                    style={{
+                        color: 'white',
+                        marginLeft: '20px',
+                        marginRight: 'auto',
+                        width: '40%',
+                        display: 'block',
+                        backgroundColor: 'gray',
+                      }}>
+                        {/* color="primary"
                         variant="contained"
-                        type="submit"
-                    >Submit
+                        type="submit" */}
+                    Submit
                     </Button>
                 </ValidatorForm>
                 {console.log(this.state.fname)}

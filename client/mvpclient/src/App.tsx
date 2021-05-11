@@ -52,7 +52,7 @@ class App extends React.Component<Props, State> {
     return (
       <div>
       {this.redirectNoToken()}
-           {/* <RawGood sessionToken={this.state.sessionToken} /> */}
+      <img src="src\assests\Untitled-4-01.png" alt="Girl in a jacket" width="100%" height="100%" />
       </div>
     )
   }

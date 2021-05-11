@@ -48,10 +48,12 @@ class App extends React.Component<AcceptedProps, State> {
           </Route>
         </Switch> */}
 
-        {/* <RawGood sessionToken={this.state.sessionToken} /> */}
+        <RawGood sessionToken={this.state.sessionToken} />
         {/* <RawGoodList sessionToken={this.state.sessionToken}/> */}
-        {/* <BOM sessionToken={this.state.sessionToken} /> */}
+        <BOM sessionToken={this.state.sessionToken} />
         {/* <FinishedGood sessionToken={this.state.sessionToken}/> */}
+        <br></br>
+        <br></br>
       </div>
     )
   }
