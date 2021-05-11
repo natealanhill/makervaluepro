@@ -4,14 +4,14 @@ import { Button } from '@material-ui/core';
 
 type AcceptedProps = {
     sessionToken: string
-    // Need to know that this is the correct way to bring the token into this class component
+   
 }
 
 interface RawGoodState {
     rgName: string,
     rgUOM: string,
-    rgQty: number,
-    rgCost: number,
+    rgQty: string,
+    rgCost: string,
     rgVendor: string,
 
 }
@@ -22,13 +22,14 @@ export default class RawGood extends Component<AcceptedProps, RawGoodState> {
         this.state = {
             rgName: "",
             rgUOM: "",
-            rgQty: 0,
-            rgCost: 0,
+            rgQty: "0",
+            rgCost: "0",
             rgVendor: "",
         }
     }
+
     handleSubmit = (e: any) => {
-        e.preventDefault()
+        // e.preventDefault()
         fetch('http://localhost:3000/rawGood/rawGood', {
             method: 'POST',
             body: JSON.stringify({

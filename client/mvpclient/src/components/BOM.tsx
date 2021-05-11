@@ -8,13 +8,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import RawGood from './rawgood';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
 type AcceptedProps = {
     sessionToken: string,
@@ -22,15 +23,27 @@ type AcceptedProps = {
 
 interface BOMState {
     BOMname: string,
-    BOMrawGood: [],
-    BOMtime: number,
+    BOMrawGood: [] | any,
+    BOMtime: number | any,
     rgUnits: number,
     selectedId: number | null
 
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            '& > *': {
+                margin: theme.spacing(1),
+                width: '25ch',
+            },
+        },
+    }),
+);
+
 
 export default class BOM extends Component<AcceptedProps, BOMState> {
+    // const classes = useStyles();
     constructor(props: AcceptedProps) {
         super(props);
         this.state = {
@@ -42,19 +55,19 @@ export default class BOM extends Component<AcceptedProps, BOMState> {
         }
     }
 
-componentDidMount() {
-    this.getAllRawGoods()
-};
-componentDidUpdate(prev: AcceptedProps){
-    if (prev.sessionToken !== this.props.sessionToken){
+    componentDidMount() {
         this.getAllRawGoods()
+    };
+    componentDidUpdate(prev: AcceptedProps) {
+        if (prev.sessionToken !== this.props.sessionToken) {
+            this.getAllRawGoods()
+        }
     }
-}
 
 
     getAllRawGoods = () => {
         if (this.props.sessionToken) {
-            fetch("http://localhost:3000/rawGood/mine", {
+            fetch("http://localhost:3000/rawGood/all", {
                 method: "GET",
                 headers: new Headers({
                     "Content-Type": "application/json",
@@ -64,26 +77,29 @@ componentDidUpdate(prev: AcceptedProps){
                 .then((res) => res.json())
                 .then((data) => {
                     this.setState({ BOMrawGood: data })
+                    console.log(data)
                 })
                 .catch((err) => console.log(err));
-                console.log(this.state.BOMrawGood)
+            console.log(this.state.BOMrawGood)
         }
     };
 
     handleSubmit = (e: any) => {
+        console.log("Handeling submit")
         e.preventDefault()
         fetch('http://localhost:3000/BOM/BOM', {
             method: 'POST',
             body: JSON.stringify({
-                BOM: {
+             
                     BOMname: this.state.BOMname,
                     BOMrawGood: this.state.BOMrawGood,
                     BOMtime: this.state.BOMtime,
                     rgUnits: this.state.rgUnits
-                },
+
             }),
             headers: new Headers({
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": this.props.sessionToken
             })
 
         }).then(
@@ -101,6 +117,10 @@ componentDidUpdate(prev: AcceptedProps){
         const BOMrawGood = event.target.value;
         this.setState({ selectedId: BOMrawGood })
     };
+    handleBOMtimeChange = (event: any) => {
+        const BOMtime = event.target.value;
+        this.setState({ BOMtime: BOMtime })
+    };
     handlergUnitsChange = (event: any) => {
         const rgUnits = event.target.value;
         this.setState({ rgUnits: rgUnits })
@@ -112,7 +132,61 @@ componentDidUpdate(prev: AcceptedProps){
             <div>
                 <h2>Bill of Materials Entry</h2>
 
-                <ValidatorForm
+                <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
+                    <TextField id="standard-basic" label="BOM NAME"
+                        onChange={(e) => this.setState({ BOMname: e.target.value })}
+                        value={this.state.BOMname}
+                        name="BOMname"
+                    />
+                    <TextField id="standard-basic" label="TIME"
+                        onChange={(e) => this.setState({ BOMtime: e.target.value })}
+                        value={this.state.BOMtime}
+                        name="BOMtime"
+                    />
+                    <TextField id="standard-basic" label="Amount to Use"
+                        onChange={(e) => this.setState({ rgUnits: e.target.value })}
+                        value={this.state.rgUnits}
+                        name="rgUnits"
+                    />
+
+                    <FormControl >
+                        <InputLabel id="demo-simple-select-label">Raw Good</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={this.state.BOMrawGood}
+                            onChange={(e) => this.setState({ selectedId: e.target.value })}
+                            // onChange={this.handleBOMrawGoodChange}
+                            >
+                            {this.state.BOMrawGood.map((rawg: any) => (
+                                <MenuItem value={rawg.id}>
+                                    {rawg.rgName}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+
+                <Button
+                    color="primary"
+                    variant="contained"
+                    type="submit"
+                >Submit
+                </Button>
+                </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                {/* <ValidatorForm
                     style={{
                         marginLeft: 'auto',
                         marginRight: 'auto',
@@ -126,7 +200,11 @@ componentDidUpdate(prev: AcceptedProps){
                 >
                     <TextValidator
                         label='Bill of Materials Name'
-                        onChange={(e) => this.handleBOMnameChange(e)}
+
+                        // onChange={(e) => this.handleBOMnameChange(e)}
+
+                        // onChange={(e) => this.setState({BOMname: e.target.value})}
+
                         name='Finished Product Name'
                         value={this.state.BOMname}
                         validators={['required']}
@@ -137,6 +215,23 @@ componentDidUpdate(prev: AcceptedProps){
                         autoComplete='off'
                     >
                     </TextValidator>
+
+                    <TextValidator
+                        label='Time to Make'
+                        onChange={(e) => this.handleBOMtimeChange(e)}
+                        name='Time in minutes to make'
+                        value={this.state.BOMtime}
+                        validators={['required']}
+                        errorMessages={[
+                            'Required, names should be unique but easily remembered',
+
+                        ]}
+                        autoComplete='off'
+                    >
+                    </TextValidator>
+
+
+
 
                     {/* <FormControl >
                         <InputLabel id="demo-simple-select-label">Raw Good</InputLabel>
@@ -151,57 +246,25 @@ componentDidUpdate(prev: AcceptedProps){
                         </Select>
                     </FormControl> */}
 
-                    <FormControl >
-                        <InputLabel id="demo-simple-select-label">Raw Good</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={this.state.selectedId}
-                            onChange={this.handleBOMrawGoodChange}>
-                            {this.state.BOMrawGood.map((rawg: any) => (
-                                <MenuItem value={rawg.id}>
-                                    {rawg.rgName}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-
 
 
                     {/* <TextValidator
-                        label='Raw Good List'
-                        onChange={this.handleBOMrawGoodChange}
-                        name='Unit of Measure'
-                        value={this.state.BOMrawGood}
-                        type='string'
-                        validators={[]}
-                        errorMessages={[]}>
-                    </TextValidator> */}
-
-
-                    <TextValidator
                         label='Amount to be used'
                         onChange={this.handlergUnitsChange}
                         name='rgUnits'
                         value={this.state.rgUnits}
                         type='number'
-                        validators={['number', 'required']}
+                        validators={['isNumber', 'required']}
                         errorMessages={[
                             'username not available',
                             'this field is required'
                         ]}
-                    // autoComplete='off'
+
                     >
                     </TextValidator>
 
                     <br />
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        type="submit"
-                    >Submit
-                </Button>
-                </ValidatorForm>
+                </ValidatorForm> */}
                 {console.log(this.state.BOMname)}
             </div>
 

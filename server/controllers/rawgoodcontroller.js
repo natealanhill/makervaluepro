@@ -5,15 +5,15 @@ const bcrypt = require('bcryptjs');
 const validateSession = require('../middleware/validate-session')
 // const rawGood = require('../models/rawGood');
 
-router.post('/rawGood', validateSession,  function (req, res) {
-    let userid = req.user.id
+// router.post('/rawGood', validateSession,  function (req, res) {
+router.post('/rawGood', (req, res) => {
     rawGood.create({
         rgName: req.body.rawGood.rgName,
         rgUOM: req.body.rawGood.rgUOM,
         rgQty: req.body.rawGood.rgQty,
         rgCost: req.body.rawGood.rgCost,
         rgVendor: req.body.rawGood.rgVendor,
-        userId: userid,
+        userid: req.body.userid,
         bomid: req.body.rawGood.bomid
 
     })
@@ -32,7 +32,7 @@ router.post('/rawGood', validateSession,  function (req, res) {
 
 //Get Raw goods by user
 
- router.get("/all", validateSession, (req, res) => {
+ router.get("/all", (req, res) => {
     // console.log("Got it");
     // let userid = req.user.id
     RawGood.findAll({

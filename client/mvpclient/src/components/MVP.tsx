@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
+import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import { Button } from '@material-ui/core';
 import logo from './logo.svg'
-import Auth from './Auth'
-import RawGood from '../rawgood'
+import Auth from './auth/Auth'
+import RawGood from './rawgood'
 // import RawGoodList from './components/rawGoodList.txt'
-import BOM from '../BOM'
+import BOM from './BOM'
 // import FinishedGood from './components/finishedGood.txt'
-interface Props {
 
+
+type AcceptedProps = {
+  sessionToken: string,
 }
 
 interface State {
@@ -15,8 +18,8 @@ interface State {
 
 }
 
-class App extends React.Component<Props, State> {
-  constructor(props: Props) {
+class App extends React.Component<AcceptedProps, State> {
+  constructor(props: AcceptedProps) {
     super(props)
     this.state = { sessionToken: "" }
   }
@@ -26,27 +29,28 @@ class App extends React.Component<Props, State> {
     localStorage.setItem('sessionToken', newToken)
     this.setState({ sessionToken: newToken })
   }
-  componentDidMount(){
+  componentDidMount() {
     const localToken = localStorage.getItem("sessionToken")
-    if (localToken){
+    if (localToken) {
       this.updateToken(localToken)
     }
   }
-
-
-  // redirectNoToken = () => {
-  //   if(!this.state.sessionToken) {
-  //     return <Redirect to='/' />
-  //   }
-  // }
 
   render() {
 
     return (
       <div>
-        <RawGood sessionToken={this.state.sessionToken}/>
+
+{/* 
+        <Switch>
+          <Route exact path="/rawgood">
+          <RawGood sessionToken={this.props.sessionToken} />
+          </Route>
+        </Switch> */}
+
+        <RawGood sessionToken={this.state.sessionToken} />
         {/* <RawGoodList sessionToken={this.state.sessionToken}/> */}
-        <BOM sessionToken={this.state.sessionToken}/>
+        <BOM sessionToken={this.state.sessionToken} />
         {/* <FinishedGood sessionToken={this.state.sessionToken}/> */}
       </div>
     )

@@ -8,13 +8,14 @@ const validateSession = require('../middleware/validate-session')
 
 
 router.post('/BOM', validateSession, function (req, res) {
+// router.post('/BOM', function (req, res) {
     rawGood.findAll({ where: { userId: req.user.id } }).then((rawGoodList) => {
         BOM.create({
             BOMname: req.body.BOMname,
             BOMrawGoods: rawGoodList,
             rgUnits: req.body.rgUnits,
             BOMtime: req.body.BOMtime,
-            userId: req.user.id
+            userid: req.body.userid
         })
             .then(
                 function createSuccess(response) {
@@ -41,7 +42,7 @@ router.get("/BOMlist", validateSession, (req, res) => {
 router.put('/BOMedit/:entryId', validateSession, function (req, res) {
     const editBOM = {
         BOMname: req.body.BOM.BOMname,
-        BOMrawGoods: [],  //is this a fetch?
+        BOMrawGoods: [],  
         rgUnits: req.body.BOM.rgUnits,
 
     };

@@ -6,8 +6,6 @@ import  Login  from './Login';
 type AcceptedProps = {
     updateToken: (newToken: string) => void;
 
-    // updateRole: (newUserIsAdmin: string) => void;
-
 };
 type UserState = {
     showLogin: boolean;
@@ -40,14 +38,14 @@ export default class Auth extends Component<AcceptedProps, UserState> {
                         <div>
                             <Register
                                 updateToken={this.props.updateToken}
-                                // updateRole={this.props.updateRole}
+
                             />
                         </div>
                     ) : (
                         <div>
                             <Login
                                 updateToken={this.props.updateToken}
-                                // updateRole={this.props.updateRole}
+
                             />
                         </div>
                     )}

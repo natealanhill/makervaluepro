@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Button } from '@material-ui/core';
-import MVP from './MVP'
-
-
-
 
 type AcceptedProps = {
   updateToken: (newToken: string) => void;
@@ -46,11 +42,11 @@ export default class Login extends Component<AcceptedProps, LoginState> {
           } else return response.json();
         }).then((data) => {
           this.props.updateToken(data.sessionToken);
-          
+
         })
         .catch((err) => alert(err));
-        
-      }
+
+    }
   };
 
   handleUserChange = (event: any) => {
@@ -111,10 +107,6 @@ export default class Login extends Component<AcceptedProps, LoginState> {
           </Button>
         </ValidatorForm>
       </div>
-
-
-
     )
   }
-
 }
