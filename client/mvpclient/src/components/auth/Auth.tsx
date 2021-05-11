@@ -50,11 +50,7 @@ export default class Auth extends Component<AcceptedProps, UserState> {
                         </div>
                     )}
                     <br />
-                    <button
-                        onClick={(e) => {
-                            this.loginToggle(e);
-                        }}
-                    >
+                    <button onClick={(e) => {this.loginToggle(e);}}>
                         {this.state.showLogin ? "Login" : "Sign up"}
                     </button>
                 </div>

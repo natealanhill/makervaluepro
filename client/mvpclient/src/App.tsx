@@ -52,6 +52,7 @@ class App extends React.Component<Props, State> {
     return (
       <div>
       {this.redirectNoToken()}
+           {/* <RawGood sessionToken={this.state.sessionToken} /> */}
       </div>
     )
   }

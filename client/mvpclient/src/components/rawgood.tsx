@@ -30,7 +30,7 @@ export default class RawGood extends Component<AcceptedProps, RawGoodState> {
 
     handleSubmit = (e: any) => {
         // e.preventDefault()
-        fetch('http://localhost:3000/rawGood/rawGood', {
+        fetch('http://localhost:3030/rawGood/rawGood', {
             method: 'POST',
             body: JSON.stringify({
                 rawGood: {
@@ -76,6 +76,7 @@ export default class RawGood extends Component<AcceptedProps, RawGoodState> {
 
     //Render from Register.tsx needs to be updated for raw goods
     render() {
+        console.log(this.state)
         return (
             <div>
                 <h2>Raw Material Tracking</h2>
@@ -97,14 +98,13 @@ export default class RawGood extends Component<AcceptedProps, RawGoodState> {
                         
                         onChange={(e) => this.handlergNameChange(e)}
                         name='rgName'
-                        value={this.state.rgName}
-                        validators={['required']}
+                       value={this.state.rgName}
+                       validators={['required']}
                         errorMessages={[
                             'Required, names should be unique but easily remembered',
 
                         ]}
-                        autoComplete='off'
-                    >
+                        autoComplete='off'>
                     </TextValidator>
                     <TextValidator
                         label='Unit of Measure'
@@ -126,7 +126,7 @@ export default class RawGood extends Component<AcceptedProps, RawGoodState> {
                             'username not available',
                             'this field is required'
                         ]}
-                    // autoComplete='off'
+                  
                     >
                     </TextValidator>
                     <TextValidator

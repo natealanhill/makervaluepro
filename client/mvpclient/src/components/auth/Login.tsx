@@ -24,7 +24,7 @@ export default class Login extends Component<AcceptedProps, LoginState> {
   handleSubmit = (e: any) => {
     if (this.state.username !== "" && this.state.password !== "") {
       // e.preventDefault()
-      fetch(`http://localhost:3000/user/login`, {
+      fetch(`http://localhost:3030/user/login`, {
         method: 'POST',
         body: JSON.stringify({
           user: {
@@ -94,8 +94,8 @@ export default class Login extends Component<AcceptedProps, LoginState> {
             onChange={this.handlePasswordChange}
             name='password'
             value={this.state.password}
-            type='password'
-            validators={['minStringLength:6', 'required']}
+            type='string'
+            validators={['required']}
             errorMessages={[
               // 'password should be more than 5 letters',
               'this field is required',

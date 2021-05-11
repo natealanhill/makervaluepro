@@ -30,7 +30,7 @@ export default class Register extends Component<AcceptedProps, RegisterState> {
     handleSubmit = (e: any) => {
         if (this.state.username !== "" && this.state.password !== "") {
         e.preventDefault()
-        fetch(`http://localhost:3000/register`, {
+        fetch(`http://localhost:3030/register`, {
             method: 'POST',
             body: JSON.stringify({
                 user: {
@@ -125,7 +125,7 @@ export default class Register extends Component<AcceptedProps, RegisterState> {
                             'username not available',
                             'this field is required'
                         ]}
-                    // autoComplete='off'
+     
                     >
                     </TextValidator>
                     <TextValidator
@@ -133,7 +133,7 @@ export default class Register extends Component<AcceptedProps, RegisterState> {
                         onChange={this.handlePasswordChange}
                         name='password'
                         value={this.state.password}
-                        type='password'
+                        type='string'
                         validators={['minStringLength:6', 'required']}
                         errorMessages={[
                             // 'password should be more than 5 letters',

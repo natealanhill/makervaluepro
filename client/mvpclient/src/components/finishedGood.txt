@@ -51,7 +51,7 @@ export default class FinishedGood extends Component<AcceptedProps, FinishedState
 
 getAllBOM = () => {
     if (this.props.sessionToken) {
-        fetch("Http://localhost:3000/BOM/BOMlist", {
+        fetch("Http://localhost:3030/BOM/BOMlist", {
             method: "GET",
             headers: new Headers({
                 "Content-Type": "application/json",
@@ -70,7 +70,7 @@ getAllBOM = () => {
   
 handleSubmit = (e:any) => {
     e.preventDefault()
-    fetch('http://localhost:3000/finshedGood/finishedGood', {
+    fetch('http://localhost:3030/finshedGood/finishedGood', {
         method: 'POST',
         body: JSON.stringify({
             fGood:{

@@ -25,7 +25,7 @@ interface BOMState {
     BOMname: string,
     BOMrawGood: [] | any,
     BOMtime: number | any,
-    rgUnits: number,
+    rgUnits: number | any,
     selectedId: number | null
 
 }
@@ -67,7 +67,7 @@ export default class BOM extends Component<AcceptedProps, BOMState> {
 
     getAllRawGoods = () => {
         if (this.props.sessionToken) {
-            fetch("http://localhost:3000/rawGood/all", {
+            fetch("http://localhost:3030/rawGood/all", {
                 method: "GET",
                 headers: new Headers({
                     "Content-Type": "application/json",
@@ -87,7 +87,7 @@ export default class BOM extends Component<AcceptedProps, BOMState> {
     handleSubmit = (e: any) => {
         console.log("Handeling submit")
         e.preventDefault()
-        fetch('http://localhost:3000/BOM/BOM', {
+        fetch('http://localhost:3030/BOM/BOM', {
             method: 'POST',
             body: JSON.stringify({
              

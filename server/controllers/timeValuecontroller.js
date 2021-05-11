@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const validateSession = require('../middleware/validate-session')
 
-router.post('/timeValue', function (req, res){
+router.post('/timeValue', validateSession, function (req, res){
     TimeValue.create({
         timeValue: req.body.timeValue.timeValue,
         owner: req.user.id

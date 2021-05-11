@@ -26,6 +26,6 @@ app.use('/timeValue', timeValue);
 app.use('/BOM', BOM);
 
 
-app.listen(3000, function () {
-    console.log('listen 3000');
+app.listen(3030, function () {
+    console.log('listen 3030');
 })
