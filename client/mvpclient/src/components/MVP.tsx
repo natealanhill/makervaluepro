@@ -8,7 +8,7 @@ import RawGood from './rawgood'
 import BOM from './BOM'
 // import FinishedGood from './components/finishedGood.txt'
 import LandingPage from './LandingPage' 
-
+import RawGoodlist2 from './rawGoodlist2'
 type AcceptedProps = {
   sessionToken: string,
 }
@@ -40,7 +40,7 @@ class App extends React.Component<AcceptedProps, State> {
 
     return (
       <div>
-        <LandingPage />
+        {/* <LandingPage /> */}
         <img src="src\assests\vectorstock_20405450.jpg" alt="Girl in a jacket" width="100%" height="100%" />
         {/* <Switch>
           <Route exact path="/rawgood">
@@ -49,6 +49,7 @@ class App extends React.Component<AcceptedProps, State> {
         </Switch> */}
 
         <RawGood sessionToken={this.state.sessionToken} />
+        <RawGoodlist2 sessionToken={this.state.sessionToken} />
         {/* <RawGoodList sessionToken={this.state.sessionToken}/> */}
         <BOM sessionToken={this.state.sessionToken} />
         {/* <FinishedGood sessionToken={this.state.sessionToken}/> */}

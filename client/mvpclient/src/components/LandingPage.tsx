@@ -7,7 +7,7 @@ import RawGood from './rawgood'
 // import RawGoodList from './components/rawGoodList.txt'
 import BOM from './BOM'
 // import FinishedGood from './components/finishedGood.txt'
-import RawGoodList from './rawGoodList'
+
 
 interface Props {
 
@@ -36,16 +36,16 @@ class LandingPage extends React.Component<Props, State> {
     }
   }
 
-  handleClickrg(e){
-    <RawGood sessionToken={this.state.sessionToken} />
-  };
-  handleClickBOM(e){
-    <BOM sessionToken={this.state.sessionToken} />
-    console.log('BOM called')
-  };
-  handleClickfg(e){
-    <RawGood sessionToken={this.state.sessionToken} />
-  };
+  // handleClickrg(e){
+  //   <RawGood sessionToken={this.state.sessionToken} />
+  // };
+  // handleClickBOM(e){
+  //   <BOM sessionToken={this.state.sessionToken} />
+  //   console.log('BOM called')
+  // };
+  // handleClickfg(e){
+  //   <RawGood sessionToken={this.state.sessionToken} />
+  // };
 
   // redirectNoToken = () => {
   //   return this.state.sessionToken === localStorage.getItem("sessionToken")? (
@@ -59,10 +59,10 @@ class LandingPage extends React.Component<Props, State> {
 
     return (
       <div>
-  <button onClick={this.handleClickrg}>Materials List</button>
+  {/* <button onClick={this.handleClickrg}>Materials List</button>
   <button onClick={this.handleClickBOM}>Bill of Materials</button>
-  <button onClick={this.handleClickfg}>Finished Goods</button>
-  <RawGoodList  />
+  <button onClick={this.handleClickfg}>Finished Goods</button> */}
+  
       </div>
     )
   }

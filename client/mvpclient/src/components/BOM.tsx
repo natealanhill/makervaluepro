@@ -26,7 +26,7 @@ interface BOMState {
     BOMrawGood: [] | any,
     BOMtime: number | any,
     rgUnits: number | any,
-    selectedId: number | null
+    selectedId: number 
 
 }
 
@@ -51,7 +51,7 @@ export default class BOM extends Component<AcceptedProps, BOMState> {
             BOMrawGood: [],
             BOMtime: 0,
             rgUnits: 0.0,
-            selectedId: null
+            selectedId: 0, 
         }
     }
 
@@ -155,7 +155,7 @@ export default class BOM extends Component<AcceptedProps, BOMState> {
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={this.state.BOMrawGood}
-                            onChange={(e) => this.setState({ selectedId: e.target.value })}
+                            // onChange={(e) => this.setState({ selectedId: e.target.value })}
                             // onChange={this.handleBOMrawGoodChange}
                             >
                             {this.state.BOMrawGood.map((rawg: any) => (

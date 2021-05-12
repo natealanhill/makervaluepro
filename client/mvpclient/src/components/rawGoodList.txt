@@ -1,0 +1,103 @@
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
+type AcceptedProps = {
+    sessionToken: string,
+    // Need to know that this is the correct way to bring the token into this class component
+}
+
+interface RawGoodState {
+    rgName: string,
+    rgUOM: string,
+    rgQty: number,
+    rgCost: number,
+    rgVendor: string,
+
+}
+
+
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});
+
+function createData(rgName: string, rgUOM: string, rgQty: number, rgCost: number, rgVendor: string) {
+  return { rgName, rgUOM, rgQty, rgCost, rgVendor };
+}
+
+const rows = [
+  // createData('Plywood', "Sq. Feet", 32, 24.00, "Home Depot"),
+  createData(getAllRawGoods())
+
+];
+
+
+
+export default function BasicTable() {
+  const classes = useStyles();
+
+  getAllRawGoods = () => {
+    if (this.props.sessionToken) {
+        fetch("http://localhost:3030/rawGood/mine", {
+            method: "GET",
+            headers: new Headers({
+                "Content-Type": "application/json",
+                // Authorization: this.props.sessionToken,
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                this.setState({ BOMrawGood: data })
+                console.log(data)
+            })
+            .catch((err) => console.log(err));
+        console.log(this.state.BOMrawGood)
+    }
+  };
+
+
+
+
+  return (
+    <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Raw Material</TableCell>
+            <TableCell align="right">Unit of Measure</TableCell>
+            <TableCell align="right">Quantity on Hand</TableCell>
+            <TableCell align="right">Cost Per Unit</TableCell>
+            <TableCell align="right">Vendor</TableCell>
+            <TableCell align="right">Edit</TableCell>
+            <TableCell align="right">Delete</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow key={row.rgName}>
+              <TableCell component="th" scope="row">
+                {row.rgName}
+              </TableCell>
+              <TableCell align="right">{row.rgUOM}</TableCell>
+              <TableCell align="right">{row.rgQty}</TableCell>
+              <TableCell align="right">{row.rgCost}</TableCell>
+              <TableCell align="right">{row.rgVendor}</TableCell>
+              <TableCell align="right">{"EDIT"}</TableCell>
+              <TableCell align="right">{"DELETE"}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
