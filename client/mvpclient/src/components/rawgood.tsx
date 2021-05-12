@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Button } from '@material-ui/core';
+import RawGoodList from './rawGoodList'
 
 type AcceptedProps = {
     sessionToken: string
@@ -104,7 +105,8 @@ export default class RawGood extends Component<AcceptedProps, RawGoodState> {
                             'Required, names should be unique but easily remembered',
 
                         ]}
-                        autoComplete='off'>
+                        autoComplete='off'
+                 >
                     </TextValidator>
                     <TextValidator
                         label='Unit of Measure'
@@ -161,7 +163,9 @@ export default class RawGood extends Component<AcceptedProps, RawGoodState> {
                     >Submit
                 </Button>
                 </ValidatorForm>
-                {console.log(this.state.rgName)}
+
+                {/* <RawGoodList /> */}
+             
             </div>
 
         );

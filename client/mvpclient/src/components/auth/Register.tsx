@@ -22,8 +22,6 @@ export default class Register extends Component<AcceptedProps, RegisterState> {
             lname: "",
             username: "",
             password: "",
-
-
         }
     }
 

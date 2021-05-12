@@ -7,6 +7,7 @@ import RawGood from './rawgood'
 // import RawGoodList from './components/rawGoodList.txt'
 import BOM from './BOM'
 // import FinishedGood from './components/finishedGood.txt'
+import RawGoodList from './rawGoodList'
 
 interface Props {
 
@@ -61,7 +62,7 @@ class LandingPage extends React.Component<Props, State> {
   <button onClick={this.handleClickrg}>Materials List</button>
   <button onClick={this.handleClickBOM}>Bill of Materials</button>
   <button onClick={this.handleClickfg}>Finished Goods</button>
-  
+  <RawGoodList  />
       </div>
     )
   }
