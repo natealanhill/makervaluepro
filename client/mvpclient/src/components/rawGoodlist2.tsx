@@ -129,11 +129,11 @@ export default class RawGoodList2 extends Component<AcceptedProps, RawGoodState>
               {/* </Link> */}
             </Button>
           </TableCell>
-          {/* <TableCell>
-            <Button type="submit" variant="contained" color="secondary">
+          <TableCell>
+            <Button type="submit" variant="contained" color="black">
               Delete
             </Button>
-            </TableCell> */}
+            </TableCell>
         </TableRow>
       );
     });
@@ -149,7 +149,7 @@ export default class RawGoodList2 extends Component<AcceptedProps, RawGoodState>
           <Table style={styles.table} aria-label="simple table">
             <TableHead>
               <TableRow>
-                {/* <TableCell align="right">id</TableCell> */}
+                <TableCell align="left">id</TableCell>
                 <TableCell align="left">Raw Material</TableCell>
                 <TableCell align="left">Unit of Measure</TableCell>
                 <TableCell align="left">Qty</TableCell>
@@ -159,8 +159,8 @@ export default class RawGoodList2 extends Component<AcceptedProps, RawGoodState>
               
 
               </TableRow>
-                <TableBody>{this.rawGoodListMap()}</TableBody>
             </TableHead>
+                <TableBody>{this.rawGoodListMap()}</TableBody>
 
 
           </Table>
